@@ -1,7 +1,14 @@
-<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 font-[Poppins] flex flex-col">
+<div class="relative min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 font-[Poppins] flex flex-col overflow-hidden">
+
+
+  <!-- BACKGROUND SHAPES -->
+  <div class="absolute -top-40 -left-40 w-[500px] h-[500px] bg-blue-300 rounded-full blur-[120px] opacity-30 blob-animate"></div>
+
+  <div class="absolute top-[300px] -right-40 w-[500px] h-[500px] bg-green-300 rounded-full blur-[120px] opacity-30 blob-animate-reverse"></div>
+
 
   <!-- NAVBAR -->
-  <nav class="flex justify-between items-center px-10 py-6">
+  <nav class="flex justify-between items-center px-10 py-6 relative z-10">
 
     <h1 class="text-2xl font-semibold">
       💰 Pocket Control
@@ -19,7 +26,7 @@
 
 
   <!-- HERO -->
-  <section class="text-center mt-20 px-6">
+  <section class="text-center mt-20 px-6 relative z-10">
 
     <h2 class="text-5xl font-bold mb-6">
       Organize sua vida financeira
@@ -34,10 +41,15 @@
 
 
   <!-- FEATURES -->
-  <section class="grid md:grid-cols-3 gap-8 mt-24 px-10 max-w-6xl mx-auto">
+  <section class="grid md:grid-cols-3 gap-8 mt-24 px-10 max-w-6xl mx-auto relative z-10">
 
-    <div class="bg-white/30 backdrop-blur-lg border border-white/20
-      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+    <div class="bg-gradient-to-br from-white/40 to-white/10
+      backdrop-blur-xl
+      border border-white/30
+      shadow-lg shadow-black/5
+      p-8 rounded-2xl
+      transition-all duration-300
+      hover:-translate-y-2 hover:shadow-2xl hover:from-white/50 hover:to-white/20">
 
       <h3 class="text-xl font-semibold mb-3">
         📊 Dashboards inteligentes
@@ -49,8 +61,14 @@
 
     </div>
 
-    <div class="bg-white/30 backdrop-blur-lg border border-white/20
-      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+
+    <div class="bg-gradient-to-br from-white/40 to-white/10
+      backdrop-blur-xl
+      border border-white/30
+      shadow-lg shadow-black/5
+      p-8 rounded-2xl
+      transition-all duration-300
+      hover:-translate-y-2 hover:shadow-2xl hover:from-white/50 hover:to-white/20">
 
       <h3 class="text-xl font-semibold mb-3">
         💰 Controle de despesas
@@ -62,8 +80,14 @@
 
     </div>
 
-    <div class="bg-white/30 backdrop-blur-lg border border-white/20
-      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+
+    <div class="bg-gradient-to-br from-white/40 to-white/10
+      backdrop-blur-xl
+      border border-white/30
+      shadow-lg shadow-black/5
+      p-8 rounded-2xl
+      transition-all duration-300
+      hover:-translate-y-2 hover:shadow-2xl hover:from-white/50 hover:to-white/20">
 
       <h3 class="text-xl font-semibold mb-3">
         📈 Relatórios financeiros
@@ -78,8 +102,8 @@
   </section>
 
 
-  <!-- GRÁFICO DEMONSTRATIVO -->
-  <section class="mt-28 px-6">
+  <!-- GRÁFICO -->
+  <section class="mt-28 px-6 relative z-10">
 
     <div class="max-w-5xl mx-auto text-center">
 
@@ -103,8 +127,8 @@
   </section>
 
 
-  <!-- CALL TO ACTION -->
-  <section class="mt-32 text-center px-6">
+  <!-- CTA -->
+  <section class="mt-32 text-center px-6 relative z-10">
 
     <h2 class="text-3xl font-bold mb-6">
       Comece a organizar suas finanças hoje
@@ -121,18 +145,48 @@
 
 
   <!-- FOOTER -->
-  <footer class="mt-24 py-10 text-center text-gray-500 border-t border-gray-200">
+  <footer class="mt-24 py-10 text-center text-gray-500 border-t border-gray-200 relative z-10">
 
-    <p>© <%= Time.current.year %> Pocket Control</p>
+    <p>© <%= Time.current.year %> Rafael Santos - Pocket Control</p>
 
   </footer>
 
 
+  <!-- ANIMAÇÃO DOS BLOBS -->
+  <style>
+
+      @keyframes floatSlow {
+          0% { transform: translate(0px,0px) scale(1); }
+          50% { transform: translate(40px,-30px) scale(1.05); }
+          100% { transform: translate(0px,0px) scale(1); }
+      }
+
+      @keyframes floatSlowReverse {
+          0% { transform: translate(0px,0px) scale(1); }
+          50% { transform: translate(-40px,30px) scale(1.05); }
+          100% { transform: translate(0px,0px) scale(1); }
+      }
+
+      .blob-animate {
+          animation: floatSlow 18s ease-in-out infinite;
+      }
+
+      .blob-animate-reverse {
+          animation: floatSlowReverse 22s ease-in-out infinite;
+      }
+
+  </style>
+
+
   <!-- SCRIPT DO GRÁFICO -->
   <script>
-      document.addEventListener("DOMContentLoaded", function () {
+      document.addEventListener("turbo:load", function () {
 
-          const ctx = document.getElementById('financeChart');
+          const canvas = document.getElementById('financeChart');
+
+          if (!canvas) return;
+
+          const ctx = canvas.getContext('2d');
 
           new Chart(ctx, {
               type: 'line',
