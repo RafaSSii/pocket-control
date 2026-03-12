@@ -1,34 +1,84 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
+<div class="min-h-screen flex items-center justify-center bg-gray-50 relative">
 
-  <div class="bg-white p-8 rounded-xl shadow-md w-96">
+  <!-- botão voltar -->
+  <div class="absolute top-6 left-6">
+    <%= link_to root_path,
+                class:"flex items-center gap-2 text-gray-600 hover:text-black transition" do %>
 
-    <h1 class="text-2xl font-bold mb-6 text-center">Criar Conta</h1>
-
-    <%= form_with model: @user do |f| %>
-
-      <div class="mb-4">
-        <%= f.label :name %>
-        <%= f.text_field :name, class:"w-full border p-2 rounded" %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.label :email %>
-        <%= f.email_field :email, class:"w-full border p-2 rounded" %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.label :password %>
-        <%= f.password_field :password, class:"w-full border p-2 rounded" %>
-      </div>
-
-      <div class="mb-4">
-        <%= f.label :password_confirmation %>
-        <%= f.password_field :password_confirmation, class:"w-full border p-2 rounded" %>
-      </div>
-
-      <%= f.submit "Cadastrar", class:"w-full bg-blue-500 text-white p-2 rounded" %>
+      <span class="text-xl">←</span>
+      <span class="text-sm font-medium">Voltar</span>
 
     <% end %>
+  </div>
+
+  <div class="w-full max-w-md bg-white p-10 rounded-2xl shadow-lg">
+
+    <h1 class="text-2xl font-bold text-center mb-8">
+      Criar conta ✨
+    </h1>
+
+    <!-- erros -->
+    <% if @user.errors.any? %>
+      <div class="bg-red-100 text-red-600 p-3 rounded-lg mb-4">
+        <ul class="text-sm">
+          <% @user.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <%= form_with model: @user, class:"space-y-5" do |f| %>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">
+          Nome
+        </label>
+
+        <%= f.text_field :name,
+                         class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">
+          Email
+        </label>
+
+        <%= f.email_field :email,
+                          class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">
+          Senha
+        </label>
+
+        <%= f.password_field :password,
+                             class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-1">
+          Confirmar senha
+        </label>
+
+        <%= f.password_field :password_confirmation,
+                             class:"w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+      </div>
+
+      <button
+        class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+      >
+        Criar conta
+      </button>
+
+    <% end %>
+
+    <p class="text-center text-sm text-gray-500 mt-6">
+      Já tem conta?
+      <%= link_to "Entrar", login_path,
+                  class:"text-blue-500 hover:underline font-medium" %>
+    </p>
 
   </div>
 

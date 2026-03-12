@@ -1,0 +1,173 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 font-[Poppins] flex flex-col">
+
+  <!-- NAVBAR -->
+  <nav class="flex justify-between items-center px-10 py-6">
+
+    <h1 class="text-2xl font-semibold">
+      💰 Pocket Control
+    </h1>
+
+    <div class="space-x-4">
+      <%= link_to "Entrar", login_path,
+                  class:"text-gray-700 hover:text-blue-500" %>
+
+      <%= link_to "Criar conta", register_path,
+                  class:"bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" %>
+    </div>
+
+  </nav>
+
+
+  <!-- HERO -->
+  <section class="text-center mt-20 px-6">
+
+    <h2 class="text-5xl font-bold mb-6">
+      Organize sua vida financeira
+    </h2>
+
+    <p class="text-gray-600 text-lg max-w-xl mx-auto mb-10">
+      Controle suas despesas, visualize receitas e acompanhe
+      sua evolução financeira através de dashboards inteligentes.
+    </p>
+
+  </section>
+
+
+  <!-- FEATURES -->
+  <section class="grid md:grid-cols-3 gap-8 mt-24 px-10 max-w-6xl mx-auto">
+
+    <div class="bg-white/30 backdrop-blur-lg border border-white/20
+      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+
+      <h3 class="text-xl font-semibold mb-3">
+        📊 Dashboards inteligentes
+      </h3>
+
+      <p class="text-gray-700">
+        Visualize seus gastos e receitas em gráficos claros e organizados.
+      </p>
+
+    </div>
+
+    <div class="bg-white/30 backdrop-blur-lg border border-white/20
+      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+
+      <h3 class="text-xl font-semibold mb-3">
+        💰 Controle de despesas
+      </h3>
+
+      <p class="text-gray-700">
+        Registre todas suas despesas e categorize seus gastos.
+      </p>
+
+    </div>
+
+    <div class="bg-white/30 backdrop-blur-lg border border-white/20
+      p-8 rounded-2xl shadow-lg transition transform hover:-translate-y-2 hover:shadow-2xl">
+
+      <h3 class="text-xl font-semibold mb-3">
+        📈 Relatórios financeiros
+      </h3>
+
+      <p class="text-gray-700">
+        Acompanhe sua evolução financeira ao longo do tempo.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- GRÁFICO DEMONSTRATIVO -->
+  <section class="mt-28 px-6">
+
+    <div class="max-w-5xl mx-auto text-center">
+
+      <h2 class="text-3xl font-semibold mb-4">
+        Acompanhe sua evolução financeira
+      </h2>
+
+      <p class="text-gray-600 mb-10">
+        Visualize receitas e despesas em gráficos claros e intuitivos.
+      </p>
+
+    </div>
+
+    <div class="bg-white/40 backdrop-blur-xl border border-white/20
+                shadow-xl rounded-2xl p-10 max-w-4xl mx-auto">
+
+      <canvas id="financeChart"></canvas>
+
+    </div>
+
+  </section>
+
+
+  <!-- CALL TO ACTION -->
+  <section class="mt-32 text-center px-6">
+
+    <h2 class="text-3xl font-bold mb-6">
+      Comece a organizar suas finanças hoje
+    </h2>
+
+    <p class="text-gray-600 mb-8">
+      Crie sua conta gratuitamente e tenha controle total do seu dinheiro.
+    </p>
+
+    <%= link_to "Criar conta grátis", register_path,
+                class:"bg-green-500 text-white px-8 py-3 rounded-lg text-lg hover:bg-green-600 shadow-lg" %>
+
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="mt-24 py-10 text-center text-gray-500 border-t border-gray-200">
+
+    <p>© <%= Time.current.year %> Pocket Control</p>
+
+  </footer>
+
+
+  <!-- SCRIPT DO GRÁFICO -->
+  <script>
+      document.addEventListener("DOMContentLoaded", function () {
+
+          const ctx = document.getElementById('financeChart');
+
+          new Chart(ctx, {
+              type: 'line',
+              data: {
+                  labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
+                  datasets: [
+                      {
+                          label: 'Receitas',
+                          data: [3000, 3200, 3500, 4200, 4500, 4800],
+                          borderColor: '#22c55e',
+                          backgroundColor: 'rgba(34,197,94,0.2)',
+                          tension: 0.4,
+                          fill: true
+                      },
+                      {
+                          label: 'Despesas',
+                          data: [2000, 2100, 2200, 2500, 2600, 2800],
+                          borderColor: '#ef4444',
+                          backgroundColor: 'rgba(239,68,68,0.2)',
+                          tension: 0.4,
+                          fill: true
+                      }
+                  ]
+              },
+              options: {
+                  responsive: true,
+                  plugins: {
+                      legend: {
+                          position: 'top'
+                      }
+                  }
+              }
+          });
+
+      });
+  </script>
+
+</div>
