@@ -9,10 +9,13 @@ class DashboardController < ApplicationController
 
     @saldo = @receitas - @despesas
 
-    # dados para o gráfico
     @chart_labels = Transaction.group_by_month(:created_at, format: "%b").count.keys
-    @chart_receitas = Transaction.where(category: "Receita").group_by_month(:created_at).sum(:amount).values
-    @chart_despesas = Transaction.where(category: "Despesa").group_by_month(:created_at).sum(:amount).values
+
+    @chart_receitas = Transaction.where(category: "Receita")
+                                 .group_by_month(:created_at).sum(:amount).values
+
+    @chart_despesas = Transaction.where(category: "Despesa")
+                                 .group_by_month(:created_at).sum(:amount).values
 
   end
 

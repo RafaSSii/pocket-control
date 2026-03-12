@@ -7,16 +7,8 @@
       💰 Pocket Control
     </h1>
 
-    <div class="flex items-center gap-6">
-
-<span class="text-gray-600">
-Dashboard financeiro
-</span>
-
-      <%= link_to "Sair", root_path,
-                  class:"text-red-500 hover:text-red-600" %>
-
-    </div>
+    <%= link_to "Sair", root_path,
+                class:"text-red-500 hover:text-red-600" %>
 
   </nav>
 
@@ -24,9 +16,19 @@ Dashboard financeiro
   <!-- CONTAINER -->
   <div class="max-w-6xl mx-auto px-6 mt-10">
 
-    <h2 class="text-3xl font-bold mb-10">
-      Seu Dashboard
-    </h2>
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-10">
+
+      <h2 class="text-3xl font-bold">
+        Seu Dashboard
+      </h2>
+
+      <button onclick="openModal()"
+              class="bg-green-500 text-white px-5 py-2 rounded-lg hover:bg-green-600 shadow">
+        Nova Transação
+      </button>
+
+    </div>
 
 
     <!-- CARDS -->
@@ -73,7 +75,6 @@ Dashboard financeiro
     </div>
 
 
-
     <!-- GRÁFICO -->
     <div class="bg-white rounded-xl shadow p-8 mb-12">
 
@@ -87,7 +88,7 @@ Dashboard financeiro
 
 
 
-    <!-- TABELA TRANSAÇÕES -->
+    <!-- TRANSAÇÕES -->
     <div class="bg-white rounded-xl shadow p-8">
 
       <h3 class="text-xl font-semibold mb-6">
@@ -136,6 +137,76 @@ Dashboard financeiro
         </tbody>
 
       </table>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- MODAL -->
+  <div id="transactionModal"
+       class="fixed inset-0 bg-black bg-opacity-40 hidden
+flex items-center justify-center">
+
+    <div class="bg-white rounded-xl p-8 w-[400px] shadow-xl">
+
+      <h3 class="text-xl font-semibold mb-6">
+        Nova Transação
+      </h3>
+
+      <%= form_with model: Transaction.new do |f| %>
+
+        <div class="mb-4">
+
+          <label class="text-sm text-gray-600">
+            Descrição
+          </label>
+
+          <%= f.text_field :description,
+                           class:"w-full p-2 border rounded-lg" %>
+
+        </div>
+
+        <div class="mb-4">
+
+          <label class="text-sm text-gray-600">
+            Valor
+          </label>
+
+          <%= f.number_field :amount,
+                             step: 0.01,
+                             class:"w-full p-2 border rounded-lg" %>
+
+        </div>
+
+        <div class="mb-6">
+
+          <label class="text-sm text-gray-600">
+            Categoria
+          </label>
+
+          <%= f.select :category,
+                       ["Receita","Despesa"],
+                       {},
+                       class:"w-full p-2 border rounded-lg" %>
+
+        </div>
+
+        <div class="flex justify-end gap-3">
+
+          <button type="button"
+                  onclick="closeModal()"
+                  class="px-4 py-2 text-gray-600">
+            Cancelar
+          </button>
+
+          <%= f.submit "Salvar",
+                       class:"bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" %>
+
+        </div>
+
+      <% end %>
 
     </div>
 
@@ -200,6 +271,14 @@ Dashboard financeiro
           });
 
       });
+
+      function openModal(){
+          document.getElementById("transactionModal").classList.remove("hidden")
+      }
+
+      function closeModal(){
+          document.getElementById("transactionModal").classList.add("hidden")
+      }
 
   </script>
 
