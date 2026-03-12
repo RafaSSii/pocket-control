@@ -59,6 +59,7 @@
     <orderEntry type="library" scope="PROVIDED" name="erb (v6.0.2, RVM: ruby-3.2.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.13.1, RVM: ruby-3.2.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v1.3.0, RVM: ruby-3.2.4) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="groupdate (v6.7.0, RVM: ruby-3.2.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.14.8, RVM: ruby-3.2.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="importmap-rails (v2.2.3, RVM: ruby-3.2.4) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="io-console (v0.8.2, RVM: ruby-3.2.4) [gem]" level="application" />
