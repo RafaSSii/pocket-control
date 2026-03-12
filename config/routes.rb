@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get "/dashboard", to: "dashboard#index"
 
+  get "/logout", to: "sessions#destroy"
   resources :transactions, only: [:create]
 
 end
