@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get "/dashboard", to: "dashboard#index"
+
   root "home#index"
 
   get "/register", to: "users#new"
@@ -12,6 +12,6 @@ Rails.application.routes.draw do
   get "/dashboard", to: "dashboard#index"
 
   get "/logout", to: "sessions#destroy"
-  resources :transactions, only: [:create]
+  resources :transactions, only: [:create, :edit, :update, :destroy]
 
 end

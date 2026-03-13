@@ -1,6 +1,47 @@
 .font-poppins {
     font-family: 'Poppins', sans-serif;
 }
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/*
+ *= require_tree .
+ *= require_self
+*/
+
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background:#f5f6fa;
+}
+
+
+
+/* modal */
+
+.modal{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:400px;
+}
+
+/* botões */
+
+button{
+    cursor:pointer;
+}
 /*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.

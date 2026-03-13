@@ -1,23 +1,19 @@
 <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 font-[Poppins]">
 
-  <!-- NAVBAR -->
   <nav class="flex justify-between items-center px-10 py-6">
 
     <h1 class="text-2xl font-semibold">
       💰 Pocket Control
     </h1>
 
-    <%= link_to "Sair", logout_path,
-                method: :delete,
-                class:"text-red-500 hover:text-red-600" %>
+    <%= link_to "Sair", logout_path, method: :delete, class:"text-red-500 hover:text-red-600" %>
 
   </nav>
 
 
-  <!-- CONTAINER -->
   <div class="max-w-6xl mx-auto px-6 mt-10">
 
-    <!-- HEADER -->
+
     <div class="flex justify-between items-center mb-10">
 
       <h2 class="text-3xl font-bold">
@@ -32,10 +28,10 @@
     </div>
 
 
-    <!-- CARDS -->
+
     <div class="grid md:grid-cols-3 gap-6 mb-12">
 
-      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <div class="bg-white p-6 rounded-xl shadow">
 
         <h3 class="text-gray-500 text-sm">
           Saldo Total
@@ -48,7 +44,7 @@
       </div>
 
 
-      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <div class="bg-white p-6 rounded-xl shadow">
 
         <h3 class="text-gray-500 text-sm">
           Receitas
@@ -61,7 +57,7 @@
       </div>
 
 
-      <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition">
+      <div class="bg-white p-6 rounded-xl shadow">
 
         <h3 class="text-gray-500 text-sm">
           Despesas
@@ -76,7 +72,7 @@
     </div>
 
 
-    <!-- GRÁFICO -->
+
     <div class="bg-white rounded-xl shadow p-8 mb-12">
 
       <h3 class="text-xl font-semibold mb-6">
@@ -89,11 +85,10 @@
 
 
 
-    <!-- TRANSAÇÕES -->
     <div class="bg-white rounded-xl shadow p-8">
 
       <h3 class="text-xl font-semibold mb-6">
-        Últimas Transações
+        Transações
       </h3>
 
       <table class="w-full">
@@ -105,6 +100,7 @@
           <th class="py-3">Descrição</th>
           <th>Categoria</th>
           <th>Valor</th>
+          <th>Ações</th>
 
         </tr>
 
@@ -114,20 +110,32 @@
 
         <% @transactions.each do |t| %>
 
-          <tr class="border-b hover:bg-gray-50">
+          <tr class="border-b">
 
-            <td class="py-3">
-              <%= t.description %>
-            </td>
+            <td class="py-3"><%= t.description %></td>
 
-            <td>
-              <%= t.category %>
-            </td>
+            <td><%= t.category %></td>
 
-            <td class="<%= t.category == 'Receita' ? 'text-green-500' : 'text-red-500' %> font-semibold">
+            <td class="<%= t.category == 'Receita' ? 'text-green-500' : 'text-red-500' %>">
 
               <%= t.category == "Receita" ? "+" : "-" %>
               R$ <%= t.amount %>
+
+            </td>
+
+
+            <td class="flex gap-3">
+
+              <%= link_to "Editar",
+                          edit_transaction_path(t),
+                          class:"text-blue-500" %>
+
+
+              <%= button_to "Excluir",
+                            transaction_path(t),
+                            method: :delete,
+                            data: { turbo:false, turbo_confirm:"Tem certeza?" },
+                            class:"text-red-500 bg-transparent border-0 cursor-pointer" %>
 
             </td>
 
@@ -145,47 +153,43 @@
 
 
 
-  <!-- MODAL -->
   <div id="transactionModal"
-       class="fixed inset-0 bg-black bg-opacity-40 hidden
-flex items-center justify-center">
+       class="fixed inset-0 bg-black/30 hidden flex items-center justify-center">
 
-    <div class="bg-white rounded-xl p-8 w-[400px] shadow-xl">
+    <div class="bg-white rounded-xl p-8 w-[400px]">
 
       <h3 class="text-xl font-semibold mb-6">
         Nova Transação
       </h3>
 
-      <%= form_with model: Transaction.new do |f| %>
+      <%= form_with model: Transaction.new,
+                    url: transactions_path,
+                    data:{ turbo:false } do |f| %>
 
         <div class="mb-4">
 
-          <label class="text-sm text-gray-600">
-            Descrição
-          </label>
+          <label>Descrição</label>
 
           <%= f.text_field :description,
                            class:"w-full p-2 border rounded-lg" %>
 
         </div>
 
+
         <div class="mb-4">
 
-          <label class="text-sm text-gray-600">
-            Valor
-          </label>
+          <label>Valor</label>
 
           <%= f.number_field :amount,
-                             step: 0.01,
+                             step:0.01,
                              class:"w-full p-2 border rounded-lg" %>
 
         </div>
 
+
         <div class="mb-6">
 
-          <label class="text-sm text-gray-600">
-            Categoria
-          </label>
+          <label>Categoria</label>
 
           <%= f.select :category,
                        ["Receita","Despesa"],
@@ -193,6 +197,7 @@ flex items-center justify-center">
                        class:"w-full p-2 border rounded-lg" %>
 
         </div>
+
 
         <div class="flex justify-end gap-3">
 
@@ -202,8 +207,9 @@ flex items-center justify-center">
             Cancelar
           </button>
 
+
           <%= f.submit "Salvar",
-                       class:"bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600" %>
+                       class:"bg-green-500 text-white px-4 py-2 rounded-lg" %>
 
         </div>
 
@@ -215,25 +221,19 @@ flex items-center justify-center">
 
 
 
-  <!-- CHART -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <script>
 
-      document.addEventListener("turbo:load", function(){
+      document.addEventListener("DOMContentLoaded", function(){
 
-          const canvas = document.getElementById("financeChart");
-
-          if(!canvas) return;
-
-          const ctx = canvas.getContext("2d");
+          const ctx=document.getElementById("financeChart");
 
           new Chart(ctx,{
 
               type:"line",
 
               data:{
-
                   labels:<%= raw @chart_labels.to_json %>,
 
                   datasets:[
@@ -258,15 +258,6 @@ flex items-center justify-center">
 
                   ]
 
-              },
-
-              options:{
-                  responsive:true,
-                  plugins:{
-                      legend:{
-                          position:"top"
-                      }
-                  }
               }
 
           });
