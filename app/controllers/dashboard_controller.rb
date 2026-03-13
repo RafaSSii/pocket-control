@@ -1,51 +1,40 @@
 class DashboardController < ApplicationController
-  before_action :require_login
-
   def index
 
-    # últimas transações
-    @transactions = current_user.transactions.order(created_at: :desc).limit(10)
+    @transactions = Transaction.all
 
-    # totais
-    @receitas = current_user.transactions.where(category: "Receita").sum(:amount)
-    @despesas = current_user.transactions.where(category: "Despesa").sum(:amount)
+    # Totais
+    @receitas = @transactions.where(category: "Receita").sum(:amount)
+    @despesas = @transactions.where(category: "Despesa").sum(:amount)
 
     @saldo = @receitas - @despesas
 
 
-    # DADOS DO GRÁFICO (últimos 6 meses)
 
-    meses = (0..5).map { |i| i.months.ago.beginning_of_month }.reverse
+    receitas_por_dia = @transactions
+                         .where(category: "Receita")
+                         .group("DATE(created_at)")
+                         .sum(:amount)
 
-    @chart_labels = meses.map { |m| m.strftime("%b") }
+    despesas_por_dia = @transactions
+                         .where(category: "Despesa")
+                         .group("DATE(created_at)")
+                         .sum(:amount)
 
-    @chart_receitas = meses.map do |mes|
-      current_user.transactions
-                  .where(category: "Receita")
-                  .where(created_at: mes..mes.end_of_month)
-                  .sum(:amount)
-    end
+    datas = (receitas_por_dia.keys + despesas_por_dia.keys).uniq.sort
 
-    @chart_despesas = meses.map do |mes|
-      current_user.transactions
-                  .where(category: "Despesa")
-                  .where(created_at: mes..mes.end_of_month)
-                  .sum(:amount)
-    end
+    @chart_labels = datas.map { |d| d.strftime("%d/%m") }
+
+    @chart_receitas = datas.map { |d| receitas_por_dia[d] || 0 }
+
+    @chart_despesas = datas.map { |d| despesas_por_dia[d] || 0 }
+
+
+
+    categorias = @transactions.group(:category).sum(:amount)
+
+    @pizza_labels = categorias.keys
+    @pizza_values = categorias.values
 
   end
-
-
-  private
-
-  def require_login
-    redirect_to login_path unless session[:user_id]
-  end
-
-  def current_user
-    @current_user ||= User.find(session[:user_id])
-  end
-
-  helper_method :current_user
-
 end
