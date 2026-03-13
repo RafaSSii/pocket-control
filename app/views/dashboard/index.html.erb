@@ -33,39 +33,39 @@
 
     <div class="grid md:grid-cols-3 gap-6 mb-12">
 
-      <div class="bg-white p-6 rounded-xl shadow">
+      <div class="bg-white p-6 rounded-xl shadow transform transition duration-500 hover:scale-105 hover:shadow-xl animate-fade-in">
 
         <h3 class="text-gray-500 text-sm">
           Saldo Total
         </h3>
 
-        <p class="text-3xl font-bold text-green-500">
+        <p class="text-3xl font-bold text-green-500 mt-2">
           R$ <%= @saldo %>
         </p>
 
       </div>
 
 
-      <div class="bg-white p-6 rounded-xl shadow">
+      <div class="bg-white p-6 rounded-xl shadow transform transition duration-500 hover:scale-105 hover:shadow-xl animate-fade-in-delay">
 
         <h3 class="text-gray-500 text-sm">
           Receitas
         </h3>
 
-        <p class="text-3xl font-bold text-blue-500">
+        <p class="text-3xl font-bold text-blue-500 mt-2">
           R$ <%= @receitas %>
         </p>
 
       </div>
 
 
-      <div class="bg-white p-6 rounded-xl shadow">
+      <div class="bg-white p-6 rounded-xl shadow transform transition duration-500 hover:scale-105 hover:shadow-xl animate-fade-in-delay2">
 
         <h3 class="text-gray-500 text-sm">
           Despesas
         </h3>
 
-        <p class="text-3xl font-bold text-red-500">
+        <p class="text-3xl font-bold text-red-500 mt-2">
           R$ <%= @despesas %>
         </p>
 
